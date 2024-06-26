@@ -71,6 +71,9 @@
               "buildTarget": "frontend:build:development"
             }
           },
+          "options": {
+            "port": 4201
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -98,5 +101,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "87fead85-3754-47ba-b789-d2f535f08a16"
   }
 }
