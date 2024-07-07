@@ -1,0 +1,25 @@
+<div class="player-container flex flex-col justify-center items-center min-h-screen bg-gray-500">
+    <h2 class="text-3xl font-bold mb-4">Spotify Web Player</h2>
+  
+    <div class="track-info mb-8">
+      <div *ngIf="currentTrack" class="flex items-center">
+        <img [src]="currentTrack.album.images[0].url" alt="Album Art" class="w-32 h-32 rounded-lg shadow-md">
+        <div class="ml-4">
+          <h3 class="text-xl font-semibold">{{ currentTrack.name }}</h3>
+          <p class="text-lg">{{ currentTrack.artists[0].name }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="controls flex space-x-4">
+      <button (click)="togglePlayPause()" class="px-6 py-3 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600">
+        {{ isPlaying ? 'Pause' : 'Play' }}
+      </button>
+      <button (click)="nextTrack()" class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+        Next
+      </button>
+      <button (click)="previousTrack()" class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+        Previous
+      </button>
+    </div>
+  </div>

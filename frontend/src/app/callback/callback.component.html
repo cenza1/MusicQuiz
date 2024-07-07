@@ -1,0 +1,23 @@
+<div class="mx-auto max-w-screen-xl flex m-5">
+    <div class="flex-1 mr 4">
+        <div class="grid grid-cols-3 gap-4">
+            <div *ngFor="let category of categories | keyvalue"
+                class="p-4 border rounded-md cursor-pointer"
+                [class.bg-blue-200]="categories[category.key]"
+                (click)="toggleCategorySelection(category.key)">
+            <h3 class="text-lg font-semibold">{{ category.key }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="w-1/4 ml-4">
+        <div *ngFor="let size of quizSize; let i = index"
+        class="p-4 border rounded-md cursor-pointer mb-4"
+         [class.bg-blue-200]="isSelected(size)"
+        (click)="toggleSelectSize(size)">
+        <h3 class="text-lg font-semibold">{{quizSize[i]}} Songs</h3>
+        </div>
+        <button (click)="getCategories()" class="connect-button mt-4 ml-10">Generate Quiz</button>
+    </div>
+    
+</div>
+

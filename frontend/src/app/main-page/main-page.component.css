@@ -1,0 +1,21 @@
+.main-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust height as needed */
+  }
+  
+  .connect-button {
+    padding: 20px 40px;
+    font-size: 24px;
+    background-color: #1db954; /* Spotify green */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .connect-button:hover {
+    background-color: #0f8133; /* Darker shade of green on hover */
+  }
