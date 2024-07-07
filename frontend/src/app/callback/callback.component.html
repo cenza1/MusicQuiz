@@ -16,6 +16,12 @@
         (click)="toggleSelectSize(size)">
         <h3 class="text-lg font-semibold">{{quizSize[i]}} Songs</h3>
         </div>
+        <div *ngFor="let decade of decades; let i = index"
+        class="p-4 border rounded-md cursor-pointer mb-4"
+         [class.bg-blue-200]="isYearSelected(decade)"
+        (click)="toggleSelectYear(decade)">
+        <h3 class="text-lg font-semibold">{{decades[i]}}</h3>
+        </div>
         <button (click)="getCategories()" class="connect-button mt-4 ml-10">Generate Quiz</button>
     </div>
     

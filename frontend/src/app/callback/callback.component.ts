@@ -4,6 +4,7 @@ import { spotifyCategories } from '../entities/categories';
 import { CommonModule } from '@angular/common';
 import { SpotifyService } from '../services/spotify.service';
 import { Router } from '@angular/router';
+import { getDecades } from '../entities/decades';
 
 @Component({
   selector: 'app-callback',
@@ -20,6 +21,8 @@ export class CallbackComponent implements OnInit {
   quizSize = [10, 20, 30, 40];
   selectedQuizSize : number = 0
   recommendedTracks: any
+  decades = getDecades();
+  selectedDecade: string | undefined
   constructor(private route: ActivatedRoute, private spotifyService: SpotifyService, private router: Router,) {}
 
   ngOnInit() {
@@ -52,20 +55,41 @@ export class CallbackComponent implements OnInit {
       this.selectedQuizSize = 0;
     }
   }
-  isSelected(size: number): boolean {
+  toggleSelectYear(decade: string){
+    if(decade !== this.selectedDecade){
+      this.selectedDecade = decade;
+    }
+    else{
+      this.selectedDecade = undefined;
+    }
+  }
+  isSelected(size: any): boolean {
+
     return this.selectedQuizSize === size;
   }
+  isYearSelected(year: string): boolean{
+    return this.selectedDecade === year
+  }
   getCategories(){
-    this.spotifyService.getTracks(this.selectedCategories, this.selectedQuizSize, this.accessToken!)
-    .subscribe(
-      data => {
-        this.recommendedTracks = data;
-        this.router.navigate(['/recommendations'], { state: { recommendations: this.recommendedTracks, token: this.accessToken } });
-        console.log(this.recommendedTracks);
-      },
-      error => {
-        console.log("Could not get tracks", error);
-      }
-    )
+     this.spotifyService.getTracks(this.selectedCategories, this.selectedQuizSize, this.accessToken!)
+     .subscribe(
+       data => {
+         this.recommendedTracks = data;
+         this.router.navigate(['/recommendations'], { state: { recommendations: this.recommendedTracks, token: this.accessToken } });
+         console.log(this.recommendedTracks);
+         
+       },
+       error => {
+         console.log("Could not get tracks", error);
+       }
+     )
+    // this.spotifyService.searchTracks(this.selectedCategories, this.selectedDecade, this.selectedQuizSize, this.accessToken!)
+    // .subscribe(
+    //   data => {
+    //     this.recommendedTracks = data;
+    //     this.router.navigate(['/recommendations'], { state: { recommendations: this.recommendedTracks, token: this.accessToken } });
+    //     console.log(this.recommendedTracks);
+    //   }
+    // )
 }
 }
