@@ -1,25 +1,29 @@
 <div class="player-container flex flex-col justify-center items-center min-h-screen bg-gray-500">
-    <h2 class="text-3xl font-bold mb-4">Spotify Web Player</h2>
+    <h2 class="text-3xl font-bold mb-4">Track {{this.trackCount}} / {{this.trackUris.length}}</h2>
   
-    <div class="track-info mb-8">
-      <div *ngIf="currentTrack" class="flex items-center">
-        <img [src]="currentTrack.album.images[0].url" alt="Album Art" class="w-32 h-32 rounded-lg shadow-md">
-        <div class="ml-4">
-          <h3 class="text-xl font-semibold">{{ currentTrack.name }}</h3>
-          <p class="text-lg">{{ currentTrack.artists[0].name }}</p>
+    <div class="track-info mb-8 flex flex-col items-center">
+      <div *ngIf="currentTrack" class="flex flex-col items-center">
+        <img [src]="currentTrack.album.images[0].url" *ngIf="this.noHost !== true || this.showResults === true" alt="Album Art" class="w-96 h-92 rounded-lg shadow-md mb-4">
+        <div class="text-center">
+          <h3 class="text-2xl font-semibold" *ngIf="this.noHost !== true || this.showResults === true">{{ currentTrack.name }}</h3>
+          <p class="text-lg" *ngIf="this.noHost !== true || this.showResults === true">{{ currentTrack.artists[0].name }}</p>
+         
         </div>
       </div>
     </div>
   
     <div class="controls flex space-x-4">
+      <button (click)="previousTrack()" class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+        <i class="fas fa-backward"></i>
+      </button>
       <button (click)="togglePlayPause()" class="px-6 py-3 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600">
-        {{ isPlaying ? 'Pause' : 'Play' }}
+        <i [ngClass]="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
       </button>
       <button (click)="nextTrack()" class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
-        Next
+        <i class="fas fa-forward"></i>
       </button>
-      <button (click)="previousTrack()" class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
-        Previous
-      </button>
+      
+      
     </div>
+    <button (click)="toggleShowResults()" class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 mt-5">Show results</button>
   </div>

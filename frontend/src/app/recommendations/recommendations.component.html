@@ -1,13 +1,16 @@
 <div class="flex justify-center items-center min-h-screen bg-gray-500">
-    <div class="w-full max-w-2xl p-6 bg-green-800 rounded-lg shadow-lg">
+    <div class="w-full max-w-4xl p-6 bg-green-800 rounded-lg shadow-lg">
       <h1 class="text-2xl font-bold mb-4 text-center">Quiz playlist</h1>
-      <ul>
+      <ul class="grid grid-cols-2 gap-4">
         <li *ngFor="let track of recommendedTracks.tracks" class="p-4 mb-4 border rounded-md bg-gray-50">
-          <div class="text-lg font-semibold">{{ track.name }} - {{ track.artists[0].name }}</div>
+          <div class="text-lg font-semibold">{{ track.name }} - {{ track.artists[0].name }}
+
+            <button (click)="replaceSong(track.name)" class="text-red-500 hover:text-red-700 text-xl">
+              <p class="fas fa-redo"></p> <!-- Replace icon -->
+            </button>
+          </div>
           
-          <button (click)="replaceSong(track.name)" class="text-red-500 hover:text-red-700">
-            <p class="fas fa-redo">Remove</p> <!-- Replace icon -->
-          </button>
+          
         </li>
       </ul>
     </div>

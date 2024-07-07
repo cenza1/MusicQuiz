@@ -1,5 +1,6 @@
 <div class="mx-auto max-w-screen-xl flex m-5">
     <div class="flex-1 mr 4">
+        <h2 class="font-bold text-center text-xl mb-5">Genres (Max 5)</h2>
         <div class="grid grid-cols-3 gap-4">
             <div *ngFor="let category of categories | keyvalue"
                 class="p-4 border rounded-md cursor-pointer"
@@ -8,22 +9,36 @@
             <h3 class="text-lg font-semibold">{{ category.key }}</h3>
             </div>
         </div>
+        <div class="flex items-center space-x-2">
+            
+            
+            <mat-checkbox [(ngModel)]="checkboxValue" color="primary" (click)="onCheckboxChange()">
+                Play without host
+            </mat-checkbox>
+              
+            
+          </div>
+        <button (click)="getCategories()" class="connect-button mt-4 ml-10">Generate Quiz</button>
+        
     </div>
+    
     <div class="w-1/4 ml-4">
-        <div *ngFor="let size of quizSize; let i = index"
-        class="p-4 border rounded-md cursor-pointer mb-4"
-         [class.bg-blue-200]="isSelected(size)"
-        (click)="toggleSelectSize(size)">
-        <h3 class="text-lg font-semibold">{{quizSize[i]}} Songs</h3>
-        </div>
+        <h2 class="font-bold text-center text-xl mb-5">Decades</h2>
         <div *ngFor="let decade of decades; let i = index"
         class="p-4 border rounded-md cursor-pointer mb-4"
          [class.bg-blue-200]="isYearSelected(decade)"
         (click)="toggleSelectYear(decade)">
         <h3 class="text-lg font-semibold">{{decades[i]}}</h3>
         </div>
-        <button (click)="getCategories()" class="connect-button mt-4 ml-10">Generate Quiz</button>
+        <h2 class="font-bold text-center text-xl mb-5">Quiz Size</h2>
+        <div *ngFor="let size of quizSize; let i = index"
+        class="p-4 border rounded-md cursor-pointer mb-4"
+         [class.bg-blue-200]="isSelected(size)"
+        (click)="toggleSelectSize(size)">
+        <h3 class="text-lg font-semibold">{{quizSize[i]}} Songs</h3>
+        </div>
     </div>
+    
     
 </div>
 

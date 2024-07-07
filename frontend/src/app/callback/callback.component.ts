@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { SpotifyService } from '../services/spotify.service';
 import { Router } from '@angular/router';
 import { getDecades } from '../entities/decades';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-callback',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatCheckboxModule, FormsModule],
   templateUrl: './callback.component.html',
   styleUrl: './callback.component.css'
 })
@@ -22,7 +24,8 @@ export class CallbackComponent implements OnInit {
   selectedQuizSize : number = 0
   recommendedTracks: any
   decades = getDecades();
-  selectedDecade: string | undefined
+  checkboxValue: boolean = false;
+  selectedDecade: string | undefined;
   constructor(private route: ActivatedRoute, private spotifyService: SpotifyService, private router: Router,) {}
 
   ngOnInit() {
@@ -55,6 +58,9 @@ export class CallbackComponent implements OnInit {
       this.selectedQuizSize = 0;
     }
   }
+  onCheckboxChange(){
+    console.log("Checkbox value:", this.checkboxValue);
+  }
   toggleSelectYear(decade: string){
     if(decade !== this.selectedDecade){
       this.selectedDecade = decade;
@@ -70,14 +76,20 @@ export class CallbackComponent implements OnInit {
   isYearSelected(year: string): boolean{
     return this.selectedDecade === year
   }
+
+  resetCategories(){
+    Object.keys(this.categories).forEach(key => {
+      this.categories[key] = false;
+     })
+  }
   getCategories(){
      this.spotifyService.getTracks(this.selectedCategories, this.selectedQuizSize, this.accessToken!)
      .subscribe(
        data => {
          this.recommendedTracks = data;
-         this.router.navigate(['/recommendations'], { state: { recommendations: this.recommendedTracks, token: this.accessToken } });
+         this.router.navigate(['/recommendations'], { state: { recommendations: this.recommendedTracks, token: this.accessToken, skipToPlayer: this.checkboxValue } });
          console.log(this.recommendedTracks);
-         
+         this.resetCategories();
        },
        error => {
          console.log("Could not get tracks", error);

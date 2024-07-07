@@ -23,11 +23,17 @@ export class QuizPlayerComponent implements OnInit{
   isPlaying = false;
   currentTrack: any;
   isInitialized = false;
+  trackCount: number = 1;
+  noHost: boolean = false;
+  showResults: boolean = false;
+  
   constructor(private router: Router, private spotifyService: SpotifyService, private cdr: ChangeDetectorRef){
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       this.token = navigation.extras.state['token'];
       this.playlist = navigation.extras.state['playlist']
+      this.noHost = navigation.extras.state['noHost']
+
       
     }
   }
@@ -35,10 +41,11 @@ export class QuizPlayerComponent implements OnInit{
   ngOnInit(): void {
     for(let i = 0; i < this.playlist.tracks.length; i++){
       this.trackUris.push(this.playlist.tracks[i].uri);
+
     }
     
     this.initSpotifyPlayer();
-    
+    console.log(this.noHost);
   }
 
   initSpotifyPlayer(){
@@ -137,17 +144,24 @@ export class QuizPlayerComponent implements OnInit{
     
     
   }
+  toggleShowResults(): void{
+    this.showResults = true;
+  }
 
   nextTrack(): void {
     this.player.nextTrack().then(() => {
       setTimeout(()=> {
         console.log("Skipped to next track!")
+        this.trackCount++;
+        this.showResults = false;
       }, 100);
     });
   }
 
   previousTrack(): void {
     this.player.previousTrack();
+    this.trackCount--;
+    
   }
 
 }

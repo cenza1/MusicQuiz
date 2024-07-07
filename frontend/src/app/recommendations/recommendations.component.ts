@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SpotifyService } from '../services/spotify.service';
+import { start } from 'repl';
 
 @Component({
   selector: 'app-recommendations',
@@ -13,17 +14,24 @@ import { SpotifyService } from '../services/spotify.service';
 export class RecommendationsComponent implements OnInit{
   recommendedTracks: any
   aToken: any
+  skipToPlayer: boolean = false;
   size: number = 0
+  
   constructor(private router: Router, private spotifyService: SpotifyService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       this.recommendedTracks = navigation.extras.state['recommendations'];
       this.aToken = navigation.extras.state['token'];
+      this.skipToPlayer = navigation.extras.state['skipToPlayer'];
+
     }
   }
   ngOnInit(): void {
     this.size = this.recommendedTracks.tracks.length;
     console.log(this.recommendedTracks);
+    if(this.skipToPlayer){
+      this.startQuiz();
+    }
   }
 
   replaceSong(trackName: string){
@@ -60,6 +68,6 @@ export class RecommendationsComponent implements OnInit{
     }
   }
   startQuiz(){
-    this.router.navigate(['/quiz-player'], { state:  {token: this.aToken, playlist: this.recommendedTracks }});
+    this.router.navigate(['/quiz-player'], { state:  {token: this.aToken, playlist: this.recommendedTracks, noHost: this.skipToPlayer }});
   }
 }

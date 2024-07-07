@@ -4,8 +4,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -15,6 +16,8 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
+    MatCheckboxModule
     
     
   ],
